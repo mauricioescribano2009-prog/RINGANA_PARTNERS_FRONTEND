@@ -18,6 +18,8 @@ export default function Wizard() {
 
   const [step, setStep] = useState(0);
 
+  const [clientCreated, setClientCreated] = useState<boolean | null>(null);
+
   const [formData, setFormData] = useState({
     salutation: "",
     firstName: "",
@@ -249,6 +251,8 @@ export default function Wizard() {
 
               console.log(result);
 
+              setClientCreated(result.clientCreated);
+
               setStep(9);
 
             } catch (error) {
@@ -267,19 +271,49 @@ export default function Wizard() {
           STEP 09
       ====================================================== */}
 
-      {step === 9 && (
-        <div className="text-center">
+    {step === 9 && (
+  <div className="text-center max-w-xl mx-auto">
 
-          <h2 className="text-3xl font-bold mb-4">
-            Creando cliente...
-          </h2>
+    {clientCreated ? (
+      <>
 
-          <p className="text-gray-500">
-            Conexión con la API completada correctamente.
-          </p>
+        <h2 className="text-3xl font-bold text-green-600 mb-6">
+          ✅ Cliente creado correctamente
+        </h2>
 
-        </div>
-      )}
+        <p className="text-lg text-gray-700">
+          Tu solicitud se ha enviado correctamente a Ringana.
+        </p>
+
+        <p className="text-gray-500 mt-4">
+          En breve recibirás un correo electrónico con las instrucciones para completar tu registro.
+        </p>
+
+      </>
+    ) : (
+      <>
+
+        <h2 className="text-3xl font-bold text-red-600 mb-6">
+          ❌ No ha sido posible crear el cliente
+        </h2>
+
+        <p className="text-lg text-gray-700">
+          No hemos podido completar tu registro.
+        </p>
+
+        <p className="text-gray-500 mt-4">
+          Es posible que el correo electrónico ya exista o que alguno de los datos introducidos necesite revisión.
+        </p>
+
+        <p className="text-gray-500 mt-2">
+          Si el problema persiste, ponte en contacto con Candela.
+        </p>
+
+      </>
+    )}
+
+  </div>
+)}
 
     </>
   );

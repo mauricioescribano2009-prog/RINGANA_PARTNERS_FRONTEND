@@ -118,6 +118,7 @@ export async function POST(request: Request) {
 
     console.log(JSON.stringify(payload, null, 2));
 
+    
     // ==========================================
     // TODAVÍA ENVIAMOS EL BODY ORIGINAL
     // ==========================================
@@ -146,13 +147,26 @@ export async function POST(request: Request) {
     console.log("OK:", wf01Response.ok);
     console.log(result);
 
-    return NextResponse.json({
+    if (!wf01Response.ok) {
 
-      success: true,
+  return NextResponse.json(
+    {
+      success: false,
+      error: result,
+    },
+    {
+      status: wf01Response.status,
+    }
+  );
+}
 
-      wf01: result,
+   return NextResponse.json({
 
-    });
+  success: true,
+
+  lead_id: payload.lead_id
+
+});
 
   } catch (error) {
 

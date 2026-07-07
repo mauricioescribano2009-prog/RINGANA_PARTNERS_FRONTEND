@@ -251,7 +251,7 @@ export default function Wizard() {
 
               console.log(result);
 
-              setClientCreated(result.clientCreated);
+              setClientCreated(response.ok && result.success);
 
               setStep(9);
 

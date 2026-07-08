@@ -22,9 +22,15 @@ export async function POST(request: Request) {
 
       lead_id: crypto.randomUUID(),
 
-      source: "candela-ringanapartners.com",
+      source: `${body.country.toLowerCase()}${body.partner_code}.ringanaassistant.com`,
 
-      partner_name: "Candela",
+      partner_name: body.partner_name,
+
+      partner_code: body.partner_code,
+
+      ringana_email: body.ringana_email,
+
+      n8n_credential: body.n8n_credential,
 
       form_version: "WF01_FORM_V1.1",
 

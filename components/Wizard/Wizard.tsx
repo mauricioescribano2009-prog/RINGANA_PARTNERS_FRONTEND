@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { getPartner } from "@/lib/getPartner";
 
 import Header from "../Header/Header";
 import Button from "../Button/Button";
@@ -19,8 +21,46 @@ export default function Wizard() {
   const [step, setStep] = useState(0);
 
   const [clientCreated, setClientCreated] = useState<boolean | null>(null);
-
+  
   const [loadingDots, setLoadingDots] = useState("");
+
+  const [partner, setPartner] = useState<{
+
+  country: string;
+  partner_code: string;
+  partner_name: string;
+  ringana_email: string;
+  n8n_credential: string;
+} | null>(null);
+
+useEffect(() => {
+
+  async function loadPartner() {
+
+    try {
+
+      const data = await getPartner();
+
+      console.log("PARTNER DETECTADO");
+
+      console.log(data);
+
+      setPartner(data);
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("No se ha podido identificar el partner.");
+
+    }
+
+  }
+
+  loadPartner();
+
+}, []);
+
 
   const [formData, setFormData] = useState({
     salutation: "",
@@ -231,6 +271,14 @@ export default function Wizard() {
 
           onNext={async () => {
 
+            if (!partner) {
+
+  alert("Partner no cargado.");
+
+  return;
+
+}
+
   try {
 
     const response = await fetch("/api/create-client", {
@@ -241,7 +289,21 @@ export default function Wizard() {
         "Content-Type": "application/json",
       },
 
-      body: JSON.stringify(formData),
+body: JSON.stringify({
+
+  ...formData,
+
+  country: partner.country,
+
+  partner_code: partner.partner_code,
+
+  partner_name: partner.partner_name,
+
+  ringana_email: partner.ringana_email,
+
+  n8n_credential: partner.n8n_credential,
+
+}),
 
     });
 

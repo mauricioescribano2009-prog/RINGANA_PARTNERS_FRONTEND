@@ -20,6 +20,8 @@ export default function Wizard() {
 
   const [clientCreated, setClientCreated] = useState<boolean | null>(null);
 
+  const [loadingDots, setLoadingDots] = useState("");
+
   const [formData, setFormData] = useState({
     salutation: "",
     firstName: "",
@@ -229,41 +231,110 @@ export default function Wizard() {
 
           onNext={async () => {
 
-            try {
+  try {
 
-              const response = await fetch("/api/create-client", {
+    const response = await fetch("/api/create-client", {
 
-                method: "POST",
+      method: "POST",
 
-                headers: {
-                  "Content-Type": "application/json",
-                },
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-                body: JSON.stringify(formData),
+      body: JSON.stringify(formData),
 
-              });
+    });
 
-              const result = await response.json();
+    const result = await response.json();
 
-              console.clear();
+    console.clear();
 
-              console.log("RESPUESTA API");
+    console.log("RESPUESTA API");
+    console.log(result);
 
-              console.log(result);
+    if (!response.ok) {
 
-              setClientCreated(response.ok && result.success);
+      setClientCreated(false);
+      setStep(9);
+      return;
 
-              setStep(9);
+    }
 
-            } catch (error) {
+    const leadId = result.lead_id;
 
-              console.error(error);
+    console.log("Lead:", leadId);
 
-              alert("Error llamando a la API.");
+    setClientCreated(null);
 
-            }
+setStep(9);
 
-          }}
+let dots = "";
+
+const interval = setInterval(() => {
+
+  dots = dots.length >= 3 ? "" : dots + ".";
+
+  setLoadingDots(dots);
+
+}, 500);
+
+let finished = false;
+
+while (!finished) {
+
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
+  const statusResponse = await fetch(
+    "/api/lead-status?lead_id=" + leadId
+  );
+
+  const status = await statusResponse.json();
+
+  console.log(status);
+
+  if (status.status === "CLIENT_CREATION_IN_PROGRESS") {
+
+    continue;
+
+  }
+
+  if (status.status === "CLIENT_CREATED") {
+
+    setClientCreated(true);
+    finished = true;
+    break;
+
+  }
+
+  if (status.status === "CLIENT_CREATION_ERROR") {
+
+    setClientCreated(false);
+    finished = true;
+    break;
+
+  }
+
+  console.error("Estado inesperado:", status);
+
+}
+
+clearInterval(interval);
+
+setLoadingDots("");
+
+setStep(9);
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    alert("Error llamando a la API.");
+
+  }
+
+}}
         />
       )}
 
@@ -274,7 +345,25 @@ export default function Wizard() {
     {step === 9 && (
   <div className="text-center max-w-xl mx-auto">
 
-    {clientCreated ? (
+    {clientCreated === null ? (
+
+  <>
+
+    <h2 className="text-3xl font-bold text-blue-600 mb-6">
+      ⏳ Creando cliente{loadingDots}
+    </h2>
+
+    <p className="text-lg text-gray-700">
+      Estamos registrando tus datos en Ringana.
+    </p>
+
+    <p className="text-gray-500 mt-4">
+      Este proceso puede tardar unos segundos.
+    </p>
+
+  </>
+
+) : clientCreated ? (
       <>
 
         <h2 className="text-3xl font-bold text-green-600 mb-6">

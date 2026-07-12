@@ -437,7 +437,7 @@ setStep(9);
         </p>
 
         <p className="text-gray-500 mt-4">
-          En breve recibirás un correo electrónico con las instrucciones para completar tu registro.
+        Revisa tu correo electrónico y confirma tu dirección de email para completar el proceso de registro.
         </p>
 
       </>

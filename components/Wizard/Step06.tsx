@@ -70,7 +70,7 @@ export default function Step06({
           <input
             value={streetNumber}
             onChange={(e) => setStreetNumber(e.target.value)}
-            placeholder="25-2B"
+            placeholder="25-2c"
             className="w-full rounded-xl border border-gray-300 p-4 text-lg outline-none focus:border-green-700"
           />
         </div>

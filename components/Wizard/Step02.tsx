@@ -5,8 +5,13 @@ import { useState } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Button from "../Button/Button";
 
+import { getTranslation } from "@/lib/translations";
+
 type Props = {
+  i18n: ReturnType<typeof getTranslation>;
+
   onBack: () => void;
+
   onNext: (data: {
     firstName: string;
     lastName: string;
@@ -14,6 +19,7 @@ type Props = {
 };
 
 export default function Step02({
+  i18n,
   onBack,
   onNext,
 }: Props) {
@@ -35,31 +41,23 @@ export default function Step02({
       />
 
       <h2 className="text-3xl font-bold text-center mb-3">
-        ¿Cómo te llamas?
+        {i18n.name.title}
       </h2>
 
       <p className="text-center text-gray-500 mb-8">
-        Introduce tu nombre y tus apellidos.
+        {i18n.name.subtitle}
       </p>
-
-      {/* Nombre */}
 
       <div className="mb-5">
 
         <label className="block mb-2 text-sm font-medium">
-
-          Nombre *
-
+          {i18n.name.firstName} *
         </label>
 
         <input
-
           value={firstName}
-
           onChange={(e) => setFirstName(e.target.value)}
-
-          placeholder="Nombre"
-
+          placeholder={i18n.name.firstName}
           className="
             w-full
             rounded-xl
@@ -70,29 +68,20 @@ export default function Step02({
             outline-none
             focus:border-green-700
           "
-
         />
 
       </div>
 
-      {/* Apellidos */}
-
       <div className="mb-10">
 
         <label className="block mb-2 text-sm font-medium">
-
-          Apellidos *
-
+          {i18n.name.lastName} *
         </label>
 
         <input
-
           value={lastName}
-
           onChange={(e) => setLastName(e.target.value)}
-
-          placeholder="Apellidos"
-
+          placeholder={i18n.name.lastName}
           className="
             w-full
             rounded-xl
@@ -103,7 +92,6 @@ export default function Step02({
             outline-none
             focus:border-green-700
           "
-
         />
 
       </div>
@@ -111,9 +99,7 @@ export default function Step02({
       <div className="flex gap-4">
 
         <button
-
           onClick={onBack}
-
           className="
             flex-1
             rounded-xl
@@ -124,28 +110,21 @@ export default function Step02({
             transition
             hover:bg-gray-100
           "
-
         >
-
-          Atrás
-
+          {i18n.common.back}
         </button>
 
         <div className="flex-1">
 
           <Button
-
-            text="Siguiente"
-
+            text={i18n.common.next}
             disabled={!isValid}
-
             onClick={() =>
               onNext({
                 firstName: firstName.trim(),
                 lastName: lastName.trim(),
               })
             }
-
           />
 
         </div>

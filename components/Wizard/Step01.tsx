@@ -1,15 +1,22 @@
 "use client";
 
-import { useState } from "react";
-
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Button from "../Button/Button";
 
+import { getTranslation } from "@/lib/translations";
+
 type Props = {
+  i18n: ReturnType<typeof getTranslation>;
+
   onNext: (salutation: "MR" | "MRS") => void;
 };
 
-export default function Step01({ onNext }: Props) {
+import { useState } from "react";
+
+export default function Step01({
+  i18n,
+  onNext,
+}: Props) {
 
   const [value, setValue] = useState<"MR" | "MRS" | null>(null);
 
@@ -23,7 +30,7 @@ export default function Step01({ onNext }: Props) {
       />
 
       <h2 className="text-3xl font-bold text-center mb-8">
-        ¿Cómo debemos dirigirnos a ti?
+        {i18n.salutation.title}
       </h2>
 
       <div className="space-y-4 mb-10">
@@ -47,7 +54,7 @@ export default function Step01({ onNext }: Props) {
           `}
         >
 
-          Señor
+          {i18n.salutation.mr}
 
         </button>
 
@@ -70,17 +77,17 @@ export default function Step01({ onNext }: Props) {
           `}
         >
 
-          Señora
+          {i18n.salutation.mrs}
 
         </button>
 
       </div>
 
       <Button
-    text="Siguiente"
-    disabled={!value}
-    onClick={() => value && onNext(value)}
-/>
+        text={i18n.common.next}
+        disabled={!value}
+        onClick={() => value && onNext(value)}
+      />
 
     </>
 

@@ -4,8 +4,11 @@ export async function GET(request: NextRequest) {
 
   const hostname = request.headers.get("host") ?? "";
 
+  let country: string;
+  let partner_code: string;
+
   // ==========================
-  // DESARROLLO LOCAL
+  // DEVELOPMENT V10
   // ==========================
 
   if (
@@ -13,31 +16,29 @@ export async function GET(request: NextRequest) {
     hostname.startsWith("127.0.0.1")
   ) {
 
-    return NextResponse.json({
-
-      country: "ESP",
-
-      partner_code: "4204981",
-
-      partner_name: "Candela Arroyo",
-
-      ringana_email: "candelarroyo@gmail.com",
-
-      n8n_credential: "RINGANA_CANDELA"
-
-    });
+    country = "ESP";
+    partner_code = "4204981";
 
   }
 
   // ==========================
-  // PRODUCCIÓN
+  // URL INTERNACIONAL (V10)
   // ==========================
 
-  const subdomain = hostname.split(".")[0];
+  else {
 
-  const country = subdomain.substring(0, 3).toUpperCase();
+    const subdomain = hostname.split(".")[0];
 
-  const partner_code = subdomain.substring(3);
+    // Temporalmente seguimos utilizando el formato V1
+    // Hasta que activemos las URLs internacionales.
+    country = subdomain.substring(0, 3).toUpperCase();
+    partner_code = subdomain.substring(3);
+
+  }
+
+  // ==========================
+  // CONSULTA AL WF04
+  // ==========================
 
   const response = await fetch(process.env.PARTNER_API_URL!, {
 

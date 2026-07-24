@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ringana Assistant",
-  description: "Asistente de alta Ringana",
+  title: "Ringana Assistant · V10 DEVELOPMENT",
+  description: "Entorno de desarrollo del Ringana Assistant",
 };
 
 export default function RootLayout({

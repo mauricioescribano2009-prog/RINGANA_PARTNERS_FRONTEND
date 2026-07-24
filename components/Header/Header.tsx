@@ -2,18 +2,12 @@ export default function Header() {
   return (
     <header className="text-center mb-12">
 
+      <div className="inline-block mb-6 rounded-md bg-amber-500 px-4 py-2 text-sm font-bold tracking-wider text-white uppercase shadow">
+        V10 DEVELOPMENT · NO USAR EN PRODUCCIÓN
+      </div>
+
       <p className="text-[13px] font-medium tracking-[0.30em] uppercase text-green-700">
-        Ringana Partners
-      </p>
-
-      <h1 className="mt-4 text-[42px] font-bold text-[#1E2A39] leading-tight">
-        Asistente de Alta
-      </h1>
-
-      <p className="mt-6 text-[20px] text-gray-500 leading-relaxed">
-        Solo necesitarás aproximadamente un minuto
-        <br />
-        para crear tu cuenta de cliente Ringana.
+        RINGANA PARTNERS
       </p>
 
     </header>

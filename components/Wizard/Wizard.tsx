@@ -4,8 +4,13 @@ import { useEffect, useState } from "react";
 
 import { getPartner } from "@/lib/getPartner";
 
+import { LANGUAGES } from "@/lib/languages";
+
+import { COUNTRIES } from "@/lib/countries";
+
 import Header from "../Header/Header";
 import Button from "../Button/Button";
+import { getTranslation } from "@/lib/translations";
 
 import Step01 from "./Step01";
 import Step02 from "./Step02";
@@ -27,10 +32,13 @@ export default function Wizard() {
   const [partner, setPartner] = useState<{
 
   country: string;
+  partner_location: string;
+  partner_language: string;
   partner_code: string;
   partner_name: string;
   ringana_email: string;
   n8n_credential: string;
+  
 } | null>(null);
 
 useEffect(() => {
@@ -62,27 +70,54 @@ useEffect(() => {
 }, []);
 
 
-  const [formData, setFormData] = useState({
-    salutation: "",
-    firstName: "",
-    lastName: "",
-    birthDate: "",
+const [formData, setFormData] = useState({
 
-    email: "",
-    newsletter: true,
+  // ==========================================
+  // INTERNACIONALIZACIÓN
+  // ==========================================
 
-    taxNumber: "",
+  assistantLanguage: "es",
 
-    streetName: "",
-    streetNumber: "",
-    postalCode: "",
-    city: "",
-    country: "Spain",
+  countryCode: "ES",
 
-    phonePrefix: "0034",
-    phoneNumber: "",
-    contactSchedule: "09:00-18:00",
-  });
+  phonePrefix: "0034",
+
+  // ==========================================
+  // DATOS PERSONALES
+  // ==========================================
+
+  salutation: "",
+  firstName: "",
+  lastName: "",
+  birthDate: "",
+
+  email: "",
+  newsletter: true,
+
+  taxNumber: "",
+
+  // ==========================================
+  // DIRECCIÓN
+  // ==========================================
+
+  streetName: "",
+  streetNumber: "",
+  postalCode: "",
+  city: "",
+  country: "Spain",
+
+  // ==========================================
+  // CONTACTO
+  // ==========================================
+
+  phoneNumber: "",
+  contactSchedule: "09:00-18:00",
+
+});
+
+const t = getTranslation(formData.assistantLanguage);
+
+console.log("Idioma:", formData.assistantLanguage, t);
 
   return (
     <>
@@ -92,34 +127,72 @@ useEffect(() => {
       ====================================================== */}
 
       {step === 0 && (
-        <>
-          <Header />
+  <>
+    <Header />
 
-          <Button
-            text="Comenzar"
-            onClick={() => setStep(1)}
-          />
-        </>
-      )}
+<h2 className="text-3xl font-bold text-center mb-3">
+  {t.welcome.title}
+</h2>
+
+<p className="text-center text-gray-500 mb-8">
+  {t.welcome.subtitle}
+</p>
+
+<div className="max-w-md mx-auto mb-8">
+
+  <label className="block text-center text-lg font-semibold mb-6">
+    {t.welcome.languageLabel}
+  </label>
+
+  <select
+    className="w-full rounded-lg border border-gray-300 p-3 text-lg"
+    value={formData.assistantLanguage}
+    onChange={(e) =>
+      setFormData({
+        ...formData,
+        assistantLanguage: e.target.value,
+      })
+    }
+  >
+    {LANGUAGES.map((language) => (
+      <option
+        key={language.code}
+        value={language.code}
+      >
+        {language.label}
+      </option>
+    ))}
+  </select>
+
+</div>
+
+    <Button
+  text={t.common.start}
+  onClick={() => setStep(1)}
+/>
+
+  </>
+)}
 
       {/* ======================================================
           STEP 01
       ====================================================== */}
 
       {step === 1 && (
-        <Step01
-          onNext={(salutation) => {
+  <Step01
+    i18n={t}
+    onNext={(salutation) => {
 
-            setFormData({
-              ...formData,
-              salutation,
-            });
+      setFormData({
+        ...formData,
+        salutation,
+      });
 
-            setStep(2);
+      setStep(2);
 
-          }}
-        />
-      )}
+    }}
+  />
+)}
 
       {/* ======================================================
           STEP 02
@@ -127,6 +200,8 @@ useEffect(() => {
 
       {step === 2 && (
         <Step02
+        i18n={t}
+
           onBack={() => setStep(1)}
           onNext={({ firstName, lastName }) => {
 
@@ -148,6 +223,7 @@ useEffect(() => {
 
       {step === 3 && (
         <Step03
+        i18n={t}
           onBack={() => setStep(2)}
           onNext={(birthDate) => {
 
@@ -168,6 +244,7 @@ useEffect(() => {
 
       {step === 4 && (
         <Step04
+        i18n={t}
           onBack={() => setStep(3)}
           onNext={({ email, newsletter }) => {
 
@@ -189,6 +266,7 @@ useEffect(() => {
 
       {step === 5 && (
         <Step05
+        i18n={t}
           onBack={() => setStep(4)}
           onNext={(taxNumber) => {
 
@@ -209,27 +287,32 @@ useEffect(() => {
 
       {step === 6 && (
         <Step06
+        i18n={t}
           onBack={() => setStep(5)}
-          onNext={({
-            streetName,
-            streetNumber,
-            postalCode,
-            city,
-            country,
-          }) => {
+     onNext={({
+  streetName,
+  streetNumber,
+  postalCode,
+  city,
+  country,
+  countryCode,
+  phonePrefix,
+}) => {
 
-            setFormData({
-              ...formData,
-              streetName,
-              streetNumber,
-              postalCode,
-              city,
-              country,
-            });
+  setFormData({
+    ...formData,
+    streetName,
+    streetNumber,
+    postalCode,
+    city,
+    country,
+    countryCode,
+    phonePrefix,
+  });
 
-            setStep(7);
+  setStep(7);
 
-          }}
+}}
         />
       )}
 
@@ -237,27 +320,26 @@ useEffect(() => {
           STEP 07
       ====================================================== */}
 
-      {step === 7 && (
-        <Step07
-          onBack={() => setStep(6)}
-          onNext={({
-            phonePrefix,
-            phoneNumber,
-            contactSchedule,
-          }) => {
+   {step === 7 && (
+  <Step07
+    i18n={t}
+    onBack={() => setStep(6)}
+    onNext={({
+      phoneNumber,
+      contactSchedule,
+    }) => {
 
-            setFormData({
-              ...formData,
-              phonePrefix,
-              phoneNumber,
-              contactSchedule,
-            });
+      setFormData({
+        ...formData,
+        phoneNumber,
+        contactSchedule,
+      });
 
-            setStep(8);
+      setStep(8);
 
-          }}
-        />
-      )}
+    }}
+  />
+)}
 
       {/* ======================================================
           STEP 08
@@ -265,6 +347,7 @@ useEffect(() => {
 
       {step === 8 && (
         <Step08
+        i18n={t}
           formData={formData}
 
           onBack={() => setStep(7)}
@@ -281,6 +364,18 @@ useEffect(() => {
 
   try {
 
+    console.log("==================================");
+    console.log("FORMDATA ANTES DEL FETCH");
+    console.log("==================================");
+
+    console.table({
+      country: formData.country,
+      countryCode: formData.countryCode,
+      phonePrefix: formData.phonePrefix,
+      phoneNumber: formData.phoneNumber,
+    });
+
+
     const response = await fetch("/api/create-client", {
 
       method: "POST",
@@ -293,11 +388,17 @@ body: JSON.stringify({
 
   ...formData,
 
+  client_country: formData.country,
+
   country: partner.country,
 
   partner_code: partner.partner_code,
 
   partner_name: partner.partner_name,
+
+  partner_location: partner.partner_location,
+
+  partner_language: partner.partner_language,
 
   ringana_email: partner.ringana_email,
 
@@ -404,63 +505,67 @@ setStep(9);
           STEP 09
       ====================================================== */}
 
-    {step === 9 && (
+   {step === 9 && (
   <div className="text-center max-w-xl mx-auto">
 
     {clientCreated === null ? (
 
-  <>
+      <>
 
-    <h2 className="text-3xl font-bold text-blue-600 mb-6">
-      ⏳ Creando cliente{loadingDots}
-    </h2>
+        <h2 className="text-3xl font-bold text-blue-600 mb-6">
+          {t.status.creatingTitle}{loadingDots}
+        </h2>
 
-    <p className="text-lg text-gray-700">
-      Estamos registrando tus datos en Ringana.
-    </p>
+        <p className="text-lg text-gray-700">
+          {t.status.creatingText}
+        </p>
 
-    <p className="text-gray-500 mt-4">
-      Este proceso puede tardar unos segundos.
-    </p>
+        <p className="text-gray-500 mt-4">
+          {t.status.creatingInfo}
+        </p>
 
-  </>
+      </>
 
-) : clientCreated ? (
+    ) : clientCreated ? (
+
       <>
 
         <h2 className="text-3xl font-bold text-green-600 mb-6">
-          ✅ Cliente creado correctamente
+          {t.status.successTitle}
         </h2>
 
         <p className="text-lg text-gray-700">
-          Tu solicitud se ha enviado correctamente a Ringana.
+          {t.status.successText}
         </p>
 
         <p className="text-gray-500 mt-4">
-        Revisa tu correo electrónico y confirma tu dirección de email para completar el proceso de registro.
+          {t.status.successInfo}
         </p>
 
       </>
+
     ) : (
+
       <>
 
         <h2 className="text-3xl font-bold text-red-600 mb-6">
-          ❌ No ha sido posible crear el cliente
+          {t.status.errorTitle}
         </h2>
 
         <p className="text-lg text-gray-700">
-          No hemos podido completar tu registro.
+          {t.status.errorText}
         </p>
 
         <p className="text-gray-500 mt-4">
-          Es posible que el correo electrónico ya exista o que alguno de los datos introducidos necesite revisión.
+          {t.status.errorInfo}
         </p>
 
         <p className="text-gray-500 mt-2">
-          Si el problema persiste, ponte en contacto con Candela.
+          {t.status.errorContact}
         </p>
 
       </>
+
     )}
 
   </div>

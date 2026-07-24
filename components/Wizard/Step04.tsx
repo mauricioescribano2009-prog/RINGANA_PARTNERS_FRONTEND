@@ -5,8 +5,13 @@ import { useState } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Button from "../Button/Button";
 
+import { getTranslation } from "@/lib/translations";
+
 type Props = {
+  i18n: ReturnType<typeof getTranslation>;
+
   onBack: () => void;
+
   onNext: (data: {
     email: string;
     newsletter: boolean;
@@ -14,6 +19,7 @@ type Props = {
 };
 
 export default function Step04({
+  i18n,
   onBack,
   onNext,
 }: Props) {
@@ -35,31 +41,26 @@ export default function Step04({
       />
 
       <h2 className="text-3xl font-bold text-center mb-3">
-        ¿Cómo podemos contactar contigo?
+        {i18n.email.title}
       </h2>
 
       <p className="text-center text-gray-500 mb-8">
-        Introduce el correo electrónico donde recibirás la confirmación de Ringana.
+        {i18n.email.subtitle}
       </p>
 
       <div className="mb-6">
 
         <label className="block mb-2 font-medium">
 
-          Email *
+          {i18n.email.label} *
 
         </label>
 
         <input
-
           type="email"
-
           value={email}
-
           onChange={(e) => setEmail(e.target.value)}
-
-          placeholder="nombre@email.com"
-
+          placeholder={i18n.email.placeholder}
           className="
             w-full
             rounded-xl
@@ -70,7 +71,6 @@ export default function Step04({
             outline-none
             focus:border-green-700
           "
-
         />
 
       </div>
@@ -78,20 +78,15 @@ export default function Step04({
       <label className="flex items-start gap-3 mb-10 cursor-pointer">
 
         <input
-
           type="checkbox"
-
           checked={newsletter}
-
           onChange={(e) => setNewsletter(e.target.checked)}
-
           className="mt-1"
-
         />
 
         <span>
 
-          Deseo recibir la newsletter de Ringana.
+          {i18n.email.newsletter}
 
         </span>
 
@@ -100,9 +95,7 @@ export default function Step04({
       <div className="flex gap-4">
 
         <button
-
           onClick={onBack}
-
           className="
             flex-1
             rounded-xl
@@ -110,34 +103,26 @@ export default function Step04({
             border-gray-300
             py-5
             font-semibold
+            transition
+            hover:bg-gray-100
           "
-
         >
 
-          Atrás
+          {i18n.common.back}
 
         </button>
 
         <div className="flex-1">
 
           <Button
-
-            text="Siguiente"
-
+            text={i18n.common.next}
             disabled={!valid}
-
             onClick={() =>
-
               onNext({
-
                 email,
-
-                newsletter
-
+                newsletter,
               })
-
             }
-
           />
 
         </div>

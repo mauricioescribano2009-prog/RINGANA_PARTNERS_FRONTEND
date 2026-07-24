@@ -6,6 +6,18 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
+console.log("==================================");
+console.log("PHONE DEBUG");
+console.log("==================================");
+
+console.table({
+  client_country: body.client_country,
+  countryCode: body.countryCode,
+  phonePrefix: body.phonePrefix,
+  phoneNumber: body.phoneNumber,
+});
+
+
     console.log("==================================");
     console.log("JSON RECIBIDO DEL FRONTEND");
     console.log("==================================");
@@ -16,17 +28,24 @@ export async function POST(request: Request) {
     // CONSTRUCCIÓN DEL PAYLOAD PARA WF01
     // ==========================================
 
+    console.log("body.client_country =", body.client_country);
+    console.log("body.country =", body.country);
+
     const payload = {
 
       // Metadatos
 
       lead_id: crypto.randomUUID(),
 
-      source: `${body.country.toLowerCase()}${body.partner_code}.ringanaassistant.com`,
+      source: `eses${body.partner_code}.ringanaassistant.com`,
 
       partner_name: body.partner_name,
 
       partner_code: body.partner_code,
+
+      partner_location: body.partner_location,
+
+      partner_language: body.partner_language,
 
       ringana_email: body.ringana_email,
 
@@ -58,7 +77,7 @@ export async function POST(request: Request) {
 
       // Dirección
 
-      country: body.country,
+      country: body.client_country,
 
       address_search: "",
 
@@ -80,13 +99,13 @@ export async function POST(request: Request) {
 
       city: body.city,
 
-      country_code: "ES",
+      country_code: body.countryCode,
 
       // Teléfono
 
       contact_type: "TELÉFONO MÓVIL",
 
-      phone_country: "España (+34)",
+      phone_country: body.client_country,
 
       phone_prefix: body.phonePrefix,
 
@@ -118,6 +137,9 @@ export async function POST(request: Request) {
 
     };
 
+    console.log("payload.country =", payload.country);
+    console.log("payload.phone_country =", payload.phone_country);    
+
     console.log("==================================");
     console.log("PAYLOAD WF01");
     console.log("==================================");
@@ -130,19 +152,15 @@ export async function POST(request: Request) {
     // ==========================================
 
     const wf01Response = await fetch(
-  "https://n8n.ringanaassistant.com/webhook/api/v1/lead",
+  process.env.WF01_URL!,
   {
-
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify(payload),
-
-    });
-
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  }
+);
     const result = await wf01Response.text();
 
     console.log("==================================");

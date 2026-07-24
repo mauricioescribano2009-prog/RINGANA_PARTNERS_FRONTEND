@@ -14,8 +14,8 @@ export async function GET(request: Request) {
   }
 
   const response = await fetch(
-    "https://n8n.ringanaassistant.com/webhook/api/v1/lead-status?lead_id=" + lead_id
-  );
+  "https://n8n.ringanaassistant.com/webhook/api/v10/lead-status?lead_id=" + lead_id
+);
 
   const result = await response.json();
 

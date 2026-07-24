@@ -5,12 +5,17 @@ import { useState } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Button from "../Button/Button";
 
+import { getTranslation } from "@/lib/translations";
+
 type Props = {
+  i18n: ReturnType<typeof getTranslation>;
+
   onBack: () => void;
   onNext: (birthDate: string) => void;
 };
 
 export default function Step03({
+  i18n,
   onBack,
   onNext,
 }: Props) {
@@ -24,7 +29,7 @@ export default function Step03({
     month !== "" &&
     year !== "";
 
-  const years = [];
+  const years: number[] = [];
 
   for (let y = new Date().getFullYear(); y >= 1900; y--) {
     years.push(y);
@@ -34,23 +39,28 @@ export default function Step03({
 
     <>
 
-      <ProgressBar current={3} total={12} />
+      <ProgressBar
+        current={3}
+        total={12}
+      />
 
       <h2 className="text-3xl font-bold text-center mb-3">
-        ¿Cuándo naciste?
+        {i18n.birth.title}
       </h2>
 
       <p className="text-center text-gray-500 mb-8">
-        Necesitamos tu fecha de nacimiento.
+        {i18n.birth.subtitle}
       </p>
 
       <div className="space-y-5">
+
+        {/* Día */}
 
         <div>
 
           <label className="block mb-2 font-medium">
 
-            Día *
+            {i18n.birth.day} *
 
           </label>
 
@@ -60,7 +70,11 @@ export default function Step03({
             className="w-full rounded-xl border border-gray-300 p-4"
           >
 
-            <option value="">Selecciona...</option>
+            <option value="">
+
+              {i18n.birth.select}
+
+            </option>
 
             {Array.from({ length: 31 }, (_, i) => (
 
@@ -79,11 +93,13 @@ export default function Step03({
 
         </div>
 
+        {/* Mes */}
+
         <div>
 
           <label className="block mb-2 font-medium">
 
-            Mes *
+            {i18n.birth.month} *
 
           </label>
 
@@ -93,30 +109,36 @@ export default function Step03({
             className="w-full rounded-xl border border-gray-300 p-4"
           >
 
-            <option value="">Selecciona...</option>
+            <option value="">
 
-            <option value="01">Enero</option>
-            <option value="02">Febrero</option>
-            <option value="03">Marzo</option>
-            <option value="04">Abril</option>
-            <option value="05">Mayo</option>
-            <option value="06">Junio</option>
-            <option value="07">Julio</option>
-            <option value="08">Agosto</option>
-            <option value="09">Septiembre</option>
-            <option value="10">Octubre</option>
-            <option value="11">Noviembre</option>
-            <option value="12">Diciembre</option>
+              {i18n.birth.select}
+
+            </option>
+
+            {i18n.birth.months.map((monthName, index) => (
+
+              <option
+                key={index}
+                value={String(index + 1).padStart(2, "0")}
+              >
+
+                {monthName}
+
+              </option>
+
+            ))}
 
           </select>
 
         </div>
 
+        {/* Año */}
+
         <div>
 
           <label className="block mb-2 font-medium">
 
-            Año *
+            {i18n.birth.year} *
 
           </label>
 
@@ -126,7 +148,11 @@ export default function Step03({
             className="w-full rounded-xl border border-gray-300 p-4"
           >
 
-            <option value="">Selecciona...</option>
+            <option value="">
+
+              {i18n.birth.select}
+
+            </option>
 
             {years.map((y) => (
 
@@ -158,10 +184,12 @@ export default function Step03({
             border-gray-300
             py-5
             font-semibold
+            transition
+            hover:bg-gray-100
           "
         >
 
-          Atrás
+          {i18n.common.back}
 
         </button>
 
@@ -169,7 +197,7 @@ export default function Step03({
 
           <Button
 
-            text="Siguiente"
+            text={i18n.common.next}
 
             disabled={!valid}
 

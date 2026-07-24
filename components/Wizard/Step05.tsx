@@ -5,12 +5,17 @@ import { useState } from "react";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import Button from "../Button/Button";
 
+import { getTranslation } from "@/lib/translations";
+
 type Props = {
+  i18n: ReturnType<typeof getTranslation>;
+
   onBack: () => void;
   onNext: (taxNumber: string) => void;
 };
 
 export default function Step05({
+  i18n,
   onBack,
   onNext,
 }: Props) {
@@ -30,13 +35,13 @@ export default function Step05({
 
       <h2 className="text-3xl font-bold text-center mb-3">
 
-        ¿Cuál es tu documento de identidad?
+        {i18n.tax.title}
 
       </h2>
 
       <p className="text-center text-gray-500 mb-8">
 
-        Introduce tu NIF o NIE.
+        {i18n.tax.subtitle}
 
       </p>
 
@@ -44,7 +49,7 @@ export default function Step05({
 
         <label className="block mb-2 font-medium">
 
-          NIF / NIE *
+          {i18n.tax.label} *
 
         </label>
 
@@ -58,7 +63,7 @@ export default function Step05({
             )
           }
 
-          placeholder="12345678Z"
+          placeholder={i18n.tax.placeholder}
 
           className="
             w-full
@@ -89,11 +94,13 @@ export default function Step05({
             border-gray-300
             py-5
             font-semibold
+            transition
+            hover:bg-gray-100
           "
 
         >
 
-          Atrás
+          {i18n.common.back}
 
         </button>
 
@@ -101,16 +108,14 @@ export default function Step05({
 
           <Button
 
-            text="Siguiente"
+            text={i18n.common.next}
 
             disabled={!valid}
 
             onClick={() =>
-
               onNext(
                 taxNumber.trim()
               )
-
             }
 
           />

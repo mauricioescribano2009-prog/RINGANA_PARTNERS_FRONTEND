@@ -392,18 +392,6 @@ body: JSON.stringify({
 
   country: partner.country,
 
-  partner_code: partner.partner_code,
-
-  partner_name: partner.partner_name,
-
-  partner_location: partner.partner_location,
-
-  partner_language: partner.partner_language,
-
-  ringana_email: partner.ringana_email,
-
-  n8n_credential: partner.n8n_credential,
-
 }),
 
     });

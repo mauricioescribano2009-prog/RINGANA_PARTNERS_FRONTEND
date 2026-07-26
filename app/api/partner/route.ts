@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getPublicPartner } from "@/lib/registry";
 
 export async function GET(request: NextRequest) {
 
   const hostname = request.headers.get("host") ?? "";
 
-  let country: string;
-  let partner_code: string;
+  let partnerCode: string;
 
   // ==========================
-  // DEVELOPMENT V10
+  // DEVELOPMENT
   // ==========================
 
   if (
@@ -16,58 +16,46 @@ export async function GET(request: NextRequest) {
     hostname.startsWith("127.0.0.1")
   ) {
 
-    country = "ESP";
-    partner_code = "4204981";
+    partnerCode = "4204981";
 
   }
 
   // ==========================
-  // URL INTERNACIONAL (V10)
+  // PRODUCCIÓN
   // ==========================
 
   else {
 
     const subdomain = hostname.split(".")[0];
 
-    // Temporalmente seguimos utilizando el formato V1
-    // Hasta que activemos las URLs internacionales.
-    country = subdomain.substring(0, 3).toUpperCase();
-    partner_code = subdomain.substring(3);
+    // Formato actual:
+    // esp4204981
+    // Formato futuro:
+    // eses4204981
+
+    partnerCode = subdomain.replace(/^[A-Za-z]+/, "");
 
   }
 
-  // ==========================
-  // CONSULTA AL WF04
-  // ==========================
+ try {
 
-  const response = await fetch(process.env.PARTNER_API_URL!, {
+const partner = await getPublicPartner(partnerCode);
 
-    method: "POST",
+return NextResponse.json(partner);
 
-    headers: {
-      "Content-Type": "application/json",
+} catch (error) {
+
+  console.error(error);
+
+  return NextResponse.json(
+    {
+      error: "Partner no encontrado"
     },
+    {
+      status: 404
+    }
+  );
 
-    body: JSON.stringify({
-      country,
-      partner_code,
-    }),
-
-    cache: "no-store",
-
-  });
-
-  if (!response.ok) {
-
-    return NextResponse.json(
-      { error: "Partner no encontrado" },
-      { status: 404 }
-    );
-
-  }
-
-  const partner = await response.json();
-
-  return NextResponse.json(partner);
+}
 
 }

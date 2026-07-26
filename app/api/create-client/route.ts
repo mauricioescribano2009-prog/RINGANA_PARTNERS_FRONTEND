@@ -1,10 +1,34 @@
 import { NextResponse } from "next/server";
 
+import { getPartner } from "@/lib/registry";
+
 export async function POST(request: Request) {
 
   try {
 
     const body = await request.json();
+
+    const hostname = request.headers.get("host") ?? "";
+
+
+  let partnerCode: string;
+
+if (
+  hostname.startsWith("localhost") ||
+  hostname.startsWith("127.0.0.1")
+) {
+
+  partnerCode = "4204981";
+
+} else {
+
+  const subdomain = hostname.split(".")[0];
+
+  partnerCode = subdomain.replace(/^[A-Za-z]+/, "");
+
+}
+
+const partner = await getPartner(partnerCode);
 
 console.log("==================================");
 console.log("PHONE DEBUG");
@@ -37,19 +61,19 @@ console.table({
 
       lead_id: crypto.randomUUID(),
 
-      source: `eses${body.partner_code}.ringanaassistant.com`,
+      source: `${partner.assistant.subdomain}.ringanaassistant.com`,
 
-      partner_name: body.partner_name,
+partner_name: partner.partner.name,
 
-      partner_code: body.partner_code,
+partner_code: partner.partner.code,
 
-      partner_location: body.partner_location,
+partner_location: partner.ringana.location,
 
-      partner_language: body.partner_language,
+partner_language: partner.assistant.language.toUpperCase(),
 
-      ringana_email: body.ringana_email,
+ringana_email: partner.ringana.email,
 
-      n8n_credential: body.n8n_credential,
+n8n_credential: partner.ringana.credential,
 
       form_version: "WF01_FORM_V1.1",
 
@@ -73,7 +97,7 @@ console.table({
 
       // Idioma
 
-      language: "ES",
+      language: partner.assistant.language.toUpperCase(),
 
       // Dirección
 

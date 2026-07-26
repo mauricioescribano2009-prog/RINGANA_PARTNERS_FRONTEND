@@ -1,0 +1,28 @@
+{
+  "version": 1,
+
+  "enabled": true,
+
+  "partner": {
+    "code": "4204981",
+    "name": "Candela Arroyo"
+  },
+
+  "assistant": {
+    "subdomain": "eses4204981",
+    "market": "ES",
+    "language": "es",
+    "locale": "eses",
+    "environment": "production"
+  },
+
+  "ringana": {
+    "location": "ES",
+    "email": "candelarroyo@gmail.com",
+    "credential": "partner_4204981"
+  },
+
+  "notifications": {
+    "whatsapp": "34609101605"
+  }
+}

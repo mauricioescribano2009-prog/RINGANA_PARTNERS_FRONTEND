@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ringana Assistant · V10 DEVELOPMENT",
+  title: "Ringana Assistant",
   description: "Entorno de desarrollo del Ringana Assistant",
 };
 

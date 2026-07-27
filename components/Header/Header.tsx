@@ -3,7 +3,7 @@ export default function Header() {
     <header className="text-center mb-12">
 
       <div className="inline-block mb-6 rounded-md bg-amber-500 px-4 py-2 text-sm font-bold tracking-wider text-white uppercase shadow">
-        V10 DEVELOPMENT · NO USAR EN PRODUCCIÓN
+        RINGANA ASSISTANT
       </div>
 
       <p className="text-[13px] font-medium tracking-[0.30em] uppercase text-green-700">

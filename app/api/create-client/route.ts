@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 
-import { getPartner } from "@/lib/registry";
+import {
+  getPartner,
+  resolvePartnerCode
+} from "@/lib/registry";
 
 export async function POST(request: Request) {
 
@@ -8,27 +11,14 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
-    const hostname = request.headers.get("host") ?? "";
+    const hostname =
+  request.headers.get("host") ?? "";
 
+const partnerCode =
+  resolvePartnerCode(hostname);
 
-  let partnerCode: string;
-
-if (
-  hostname.startsWith("localhost") ||
-  hostname.startsWith("127.0.0.1")
-) {
-
-  partnerCode = "4204981";
-
-} else {
-
-  const subdomain = hostname.split(".")[0];
-
-  partnerCode = subdomain.replace(/^[A-Za-z]+/, "");
-
-}
-
-const partner = await getPartner(partnerCode);
+const partner =
+  await getPartner(partnerCode);
 
 console.log("==================================");
 console.log("PHONE DEBUG");

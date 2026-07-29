@@ -1,61 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getPublicPartner } from "@/lib/registry";
+import {
+  getPublicPartner,
+  resolvePartnerCode
+} from "@/lib/registry";
 
 export async function GET(request: NextRequest) {
 
-  const hostname = request.headers.get("host") ?? "";
+  try {
 
-  let partnerCode: string;
+    const hostname =
+      request.headers.get("host") ?? "";
 
-  // ==========================
-  // DEVELOPMENT
-  // ==========================
+    const partnerCode =
+      resolvePartnerCode(hostname);
 
-  if (
-    hostname.startsWith("localhost") ||
-    hostname.startsWith("127.0.0.1")
-  ) {
+    const partner =
+      await getPublicPartner(partnerCode);
 
-    partnerCode = "4204981";
+    return NextResponse.json(partner);
 
-  }
+  } catch (error) {
 
-  // ==========================
-  // PRODUCCIÓN
-  // ==========================
+    console.error(
+      "Error resolviendo Partner:",
+      error
+    );
 
-  else {
-
-    const subdomain = hostname.split(".")[0];
-
-    // Formato actual:
-    // esp4204981
-    // Formato futuro:
-    // eses4204981
-
-    partnerCode = subdomain.replace(/^[A-Za-z]+/, "");
+    return NextResponse.json(
+      {
+        error: "Partner no encontrado"
+      },
+      {
+        status: 404
+      }
+    );
 
   }
-
- try {
-
-const partner = await getPublicPartner(partnerCode);
-
-return NextResponse.json(partner);
-
-} catch (error) {
-
-  console.error(error);
-
-  return NextResponse.json(
-    {
-      error: "Partner no encontrado"
-    },
-    {
-      status: 404
-    }
-  );
-
-}
 
 }

@@ -57,6 +57,8 @@ partner_name: partner.partner.name,
 
 partner_code: partner.partner.code,
 
+partner_phone: partner.notifications.whatsapp,
+
 partner_location: partner.ringana.location,
 
 partner_language: partner.assistant.language.toUpperCase(),

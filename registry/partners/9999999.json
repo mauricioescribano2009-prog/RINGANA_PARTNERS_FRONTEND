@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+
+  "enabled": true,
+
+  "partner": {
+    "code": "9999999",
+    "name": "Partner Pruebas"
+  },
+
+  "assistant": {
+    "subdomain": "eses9999999",
+    "market": "ES",
+    "language": "es",
+    "locale": "es-ES",
+    "environment": "production"
+  },
+
+  "ringana": {
+    "location": "ES",
+    "email": "partner@test.com",
+    "credential": "partner_9999999"
+  },
+
+  "notifications": {
+    "whatsapp": "34696987770"
+  }
+}

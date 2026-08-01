@@ -20,7 +20,6 @@ type PartnerRegistry = {
 
   ringana: {
     location: string;
-    email: string;
     credential: string;
   };
 
@@ -219,12 +218,6 @@ function validatePartnerRegistry(
   assertNonEmptyString(
     ringana.location,
     "ringana.location",
-    partnerCode
-  );
-
-  assertNonEmptyString(
-    ringana.email,
-    "ringana.email",
     partnerCode
   );
 

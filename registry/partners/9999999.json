@@ -5,7 +5,7 @@
 
   "partner": {
     "code": "9999999",
-    "name": "Partner Pruebas"
+    "name": "Mauri Pruebas"
   },
 
   "assistant": {
@@ -18,7 +18,6 @@
 
   "ringana": {
     "location": "ES",
-    "email": "partner@test.com",
     "credential": "partner_9999999"
   },
 

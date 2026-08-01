@@ -62,9 +62,6 @@ partner_phone: partner.notifications.whatsapp,
 partner_location: partner.ringana.location,
 
 partner_language: partner.assistant.language.toUpperCase(),
-
-ringana_email: partner.ringana.email,
-
 n8n_credential: partner.ringana.credential,
 
       form_version: "WF01_FORM_V1.1",

@@ -36,9 +36,9 @@ export default function Header() {
         RINGANA ASSISTANT
       </div>
 
-      <p className="text-[13px] font-medium tracking-[0.30em] uppercase text-green-700">
-        {partnerName}
-      </p>
+      <p className="mx-auto max-w-[320px] text-3xl font-bold leading-tight text-green-700 break-words">
+  {partnerName}
+</p>
 
     </header>
 

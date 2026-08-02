@@ -1,0 +1,22 @@
+{
+    "version":  1,
+    "enabled":  true,
+    "partner":  {
+                    "code":  "4168745",
+                    "name":  "Ana Recio"
+                },
+    "assistant":  {
+                      "subdomain":  "eses4168745",
+                      "market":  "ES",
+                      "language":  "es",
+                      "locale":  "es-ES",
+                      "environment":  "production"
+                  },
+    "ringana":  {
+                    "location":  "ES",
+                    "credential":  "partner_4168745"
+                },
+    "notifications":  {
+                          "whatsapp":  "34653847071"
+                      }
+}

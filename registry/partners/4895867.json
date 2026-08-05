@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "enabled": true,
+
+    "partner": {
+        "code": "4895867",
+        "name": "Maru Iarapino"
+    },
+
+    "assistant": {
+        "subdomain": "ares4895867",
+        "market": "AR",
+        "language": "es",
+        "locale": "ares",
+        "environment": "production"
+    },
+
+    "ringana": {
+        "location": "AR",
+        "credential": "partner_4895867"
+    },
+
+    "notifications": {
+        "whatsapp": "5491155887214"
+    },
+
+    "analytics": {
+        "enabled": true,
+        "assistant_deployment_date": "2026-08-05",
+        "baseline_months": 3
+    }
+}

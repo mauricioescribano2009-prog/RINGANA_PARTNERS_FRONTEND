@@ -1,27 +1,32 @@
 {
-  "version": 1,
+    "version": 1,
+    "enabled": true,
 
-  "enabled": true,
+    "partner": {
+        "code": "4204981",
+        "name": "Candela Arroyo"
+    },
 
-  "partner": {
-    "code": "4204981",
-    "name": "Candela Arroyo"
-  },
+    "assistant": {
+        "subdomain": "eses4204981",
+        "market": "ES",
+        "language": "es",
+        "locale": "eses",
+        "environment": "production"
+    },
 
-  "assistant": {
-    "subdomain": "eses4204981",
-    "market": "ES",
-    "language": "es",
-    "locale": "eses",
-    "environment": "production"
-  },
+    "ringana": {
+        "location": "ES",
+        "credential": "partner_4204981"
+    },
 
-  "ringana": {
-    "location": "ES",
-    "credential": "partner_4204981"
-  },
+    "notifications": {
+        "whatsapp": "34609101605"
+    },
 
-  "notifications": {
-    "whatsapp": "34609101605"
-  }
+    "analytics": {
+        "enabled": true,
+        "assistant_deployment_date": "2026-08-03",
+        "baseline_months": 3
+    }
 }

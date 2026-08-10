@@ -1,0 +1,32 @@
+﻿{
+    "version": 1,
+    "enabled": true,
+
+    "partner": {
+        "code": "4181701",
+        "name": "Belen Recio"
+    },
+
+    "assistant": {
+        "subdomain": "eses4181701",
+        "market": "ES",
+        "language": "es",
+        "locale": "es-ES",
+        "environment": "production"
+    },
+
+    "ringana": {
+        "location": "ES",
+        "credential": "partner_4181701"
+    },
+
+    "notifications": {
+        "whatsapp": "34605500609"
+    },
+
+    "analytics": {
+        "enabled": true,
+        "assistant_deployment_date": "2026-08-10",
+        "baseline_months": 3
+    }
+}

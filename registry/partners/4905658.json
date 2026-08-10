@@ -1,0 +1,32 @@
+﻿{
+    "version": 1,
+    "enabled": true,
+
+    "partner": {
+        "code": "4905658",
+        "name": "Javier Gonzalez-Llamas"
+    },
+
+    "assistant": {
+        "subdomain": "eses4905658",
+        "market": "ES",
+        "language": "es",
+        "locale": "es-ES",
+        "environment": "production"
+    },
+
+    "ringana": {
+        "location": "ES",
+        "credential": "partner_4905658"
+    },
+
+    "notifications": {
+        "whatsapp": "34607313753"
+    },
+
+    "analytics": {
+        "enabled": true,
+        "assistant_deployment_date": "2026-08-10",
+        "baseline_months": 3
+    }
+}

@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "enabled": true,
+  "partner": {
+    "code": "4882598",
+    "name": "Elisa Alvarez Briales"
+  },
+  "assistant": {
+    "subdomain": "eses4882598",
+    "market": "ES",
+    "language": "es",
+    "locale": "es-ES",
+    "environment": "production"
+  },
+  "ringana": {
+    "location": "ES",
+    "credential": "partner_4882598"
+  },
+  "notifications": {
+    "whatsapp": "34673151409"
+  },
+  "analytics": {
+    "enabled": true,
+    "assistant_deployment_date": "2026-10-16",
+    "baseline_months": 3
+  }
+}
